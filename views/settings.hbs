@@ -1,0 +1,168 @@
+{{> partials/menu}}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <form id="settingsForm" data-toggle="validator">
+        <div class="col-sm-12">
+            <h2>Cài đặt chung <span class="float-right"><button type="submit" id="btnSettingsUpdate"
+                        class="btn btn-success">Cập nhật</button></span></h2>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Tên trang web *</label>
+                <input type="text" class="form-control" name="cartTitle" value="{{config.cartTitle}}" required>
+                <p class="help-block">
+                    Yếu tố này rất quan trọng cho việc tối ưu hóa công cụ tìm kiếm. Tiêu đề giỏ hàng được hiển thị nếu logo của bạn bị ẩn
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Mô tả trang web *</label>
+                <input type="text" class="form-control" name="cartDescription" value="{{config.cartDescription}}"
+                    required>
+                <p class="help-block">
+                    Mô tả này hiển thị khi trang web  được liệt kê trong kết quả của công cụ tìm kiếm.
+            </div>
+            <div class="form-group">
+                <label>logo</label>
+                <input type="text" class="form-control" name="cartLogo" value="{{config.cartLogo}}">
+            </div>
+            <div class="form-group">
+                <label>Đường dẫn *</label>
+                <input type="text" class="form-control" name="baseUrl" value="{{config.baseUrl}}" required>
+                <p class="help-block">
+                    {{ @root.__ "Đường dẫn này được gọi khi khách hàng thanh toán điện tử xong" }}
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" class="form-control" name="emailAddress" value="{{config.emailAddress}}" required>
+                <p class="help-block">
+                    Nó được dùng để gửi mail cho khách hàng</p>
+            </div>
+            <div class="form-group">
+                <label>Phương thức thanh toán</label>
+                <select class="form-control" name="paymentGateway">
+                    <option {{selectState 'paypal' config.paymentGateway}} value="paypal">Paypal</option>
+                    <option {{selectState 'stripe' config.paymentGateway}} value="stripe">Stripe</option>
+                    <option {{selectState 'adyen' config.paymentGateway}} value="adyen">Adyen</option>
+                    <option {{selectState 'authorizenet' config.paymentGateway}} value="authorizenet">Authorize.Net
+                    </option>
+                    <option {{selectState 'instore' config.paymentGateway}} value="instore">Instore</option>
+                    <option {{selectState 'blockonomics' config.paymentGateway}} value="blockonomics">Blockonomics
+                    </option>
+                </select>
+             
+            </div>
+            <div class="form-group">
+                <label>Ký hiệu tiền tệ</label>
+                <input type="text" class="form-control" name="currencySymbol"
+                    value="{{currencySymbol config.currencySymbol}}">
+                <p class="help-block">"Đặt giá trị tiền tệ. ví dụ: $, £, €, đ..</p>
+            </div>
+            {{#ifCond config.paymentGateway '==' 'blockonomics'}}
+            <div class="form-group">
+                <label>{{ @root.__ "Currency ISO" }}</label>
+                <select class="form-control" name="currencyISO">
+                    <option {{selectState 'USD' config.currencyISO}} value="USD">USD</option>
+                    <option {{selectState 'EUR' config.currencyISO}} value="EUR">EUR</option>
+                    <option {{selectState 'GBP' config.currencyISO}} value="GBP">GBP</option>
+                </select>
+               
+            </div>
+            {{/ifCond}}
+            <div class="form-group">
+                <label>Giao diện</label>
+                <select class="form-control" name="theme">
+                    {{#each themes}}
+                    <option {{selectState this ../config.theme}} value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+               
+            </div>
+            <div class="form-group">
+                <label>Số sản phẩm trên 1 hàng</label>
+                <select class="form-control" name="productsPerRow">
+                    <option value="{{config.productsPerRow}}" hidden="hidden" selected="selected">
+                        {{config.productsPerRow}}</option>
+                    <option {{selectState '1' config.productsPerRow}}>1</option>
+                    <option {{selectState '2' config.productsPerRow}}>2</option>
+                    <option {{selectState '3' config.productsPerRow}}>3</option>
+                    <option {{selectState '4' config.productsPerRow}}>4</option>
+                </select>
+               
+            </div>
+            <div class="form-group">
+                <label>Số sản phẩm trên trang</label>
+                <input type="number" class="form-control" name="productsPerPage" value="{{config.productsPerPage}}">
+              
+            </div>
+            <div class="form-group">
+                <label>Sắp xếp theo ngày/theo tên</label>
+                <select class="form-control" name="productOrderBy">
+                    <option {{selectState 'date' config.productOrderBy}} value="date">Theo ngày</option>
+                    <option {{selectState 'title' config.productOrderBy}} value="title">Theo tên</option>
+                </select>
+                <p class="help-block">
+                    Lựu chọn kiểu sắp xếp hàng trong cửa hàng</p>
+            </div>
+            <div class="form-group">
+                <label>Sắp xếp theo giá tiền</label>
+                <select class="form-control" name="productOrder">
+                    <option {{selectState 'descending' config.productOrder}} value="descending">
+                        Giảm xuống</option>
+                    <option {{selectState 'ascending' config.productOrder}} value="ascending">Tăng lên
+                    </option>
+                </select>
+                <p class="help-block">Chọn kiểu sắp xếp</p>
+            </div>
+            {{!-- <div class="form-group">
+                <label>Footer HTML</label>
+                <textarea class="form-control codemirrorArea" rows="5" id="footerHtml"
+                    name="footerHtml">{{footerHtml}}</textarea>
+                <input type="hidden" id="footerHtml_input" name="footerHtml_input">
+            </div>
+            <div class="form-group">
+                <label>Google analytics</label>
+                <textarea class="form-control" rows="3" id="googleAnalytics"
+                    name="googleAnalytics">{{googleAnalytics}}</textarea>
+                <input type="hidden" id="googleAnalytics_input" name="googleAnalytics_input">
+                <p class="help-block">
+                </p>
+            </div> --}}
+            <div class="form-group">
+                <label>Css</label>
+                <textarea class="form-control" rows="10" id="customCss" name="customCss">{{config.customCss}}</textarea>
+                <input type="hidden" id="customCss_input" name="customCss_input">
+            </div>
+            <div class="form-group">
+                <label>Email SMTP Host</label>
+                <input type="text" class="form-control" name="emailHost" value="{{config.emailHost}}" autocomplete="off"
+                    required>
+            </div>
+            <div class="form-group">
+                <label>Email SMTP Port</label>
+                <input type="text" class="form-control" name="emailPort" value="{{config.emailPort}}" autocomplete="off"
+                    required>
+            </div>
+            <div class="form-group">
+                <label>Email SMTP secure </label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" {{checkedState config.emailSecure}} name="emailSecure">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Email SMTP Username</label>
+                <input type="text" class="form-control" name="emailUser" value="{{config.emailUser}}" autocomplete="off"
+                    required>
+            </div>
+            <div class="form-group">
+                <label>Email SMTP Password</label>
+                <input type="password" class="form-control" name="emailPassword" value="{{config.emailPassword}}"
+                    autocomplete="off" required>
+            </div>
+            <div class="form-group">
+                <button id="sendTestEmail" class="btn btn-success">{{ @root.__ "Send test email" }}</button>
+            </div>
+        </div>
+    </form>
+</main>

@@ -1,0 +1,556 @@
+{{!-- <div class="productsWrapper col-sm-12 col-md-8 offset-md-2">
+    {{#if filtered}}
+    <div class="product-layout product-results col-sm-12">
+        {{#ifCond @root.paginateUrl '==' 'category'}}
+        <h1>{{ @root.__ "Category" }}: <strong>{{@root.searchTerm}}</strong></h1>
+        {{else}}
+        <h1>{{ @root.__ "Search results" }}: <strong>{{@root.searchTerm}}</strong></h1>
+        {{/ifCond}}
+    </div>
+    {{/if}}
+    <div class="row product-layout">
+        {{#ifCond results.length '==' 0}}
+        <div class="col-sm-12">
+            <p class="text-danger">{{ @root.__ "No products found" }}</p>
+        </div>
+        {{/ifCond}}
+        {{#each results}}
+        <div class="{{perRowClass ../config.productsPerRow}}">
+            <div class="thumbnail">
+                {{#if productPermalink}}
+                <d1iv class="product-wrapper">
+                    <a href="/product/{{this.productPermalink}}">
+                        <div class="vertical-center img-thumbnail">
+                            {{#if productImage}}
+                            <img class="img-fluid" src="{{this.productImage}}" alt="...">
+                            {{else}}
+                            <img class="img-fluid" src="/uploads/placeholder.png" alt="...">
+                            {{/if}}
+                        </div>
+                        <h3 class="product-title product-title-home top-pad-10">
+                            {{this.productTitle}}
+                        </h3>
+                    </a>
+            </div>
+            {{else}}
+            <a href="/product/{{this._id}}">
+                <div class="vertical-center img-thumbnail">
+                    {{#if productImage}}
+                    <img class="img-fluid" src="{{this.productImage}}" alt="...">
+                    {{else}}
+                    <img class="img-fluid" src="/uploads/placeholder.png" alt="...">
+                    {{/if}}
+                </div>
+                <h3 class="product-title product-title-home top-pad-10">
+                    {{this.productTitle}}
+                </h3>
+            </a>
+            {{/if}}
+            {{#if variants}}
+            <div class="col-md-12">
+                {{#if @root.config.showHomepageVariants}}
+                <select id="productVariant-{{this._id}}" class="productVariant form-control mb-2">
+                    {{#each variants}}
+                    <option value="{{this._id}}" data-price="{{this.price}}">{{this.title}} - {{currencySymbol
+                        @root.config.currencySymbol}}{{this.price}}</option>
+                    {{/each}}
+                </select>
+                {{else}}
+                <h4 class="product-price mp-0 text-center">
+                    {{currencySymbol @root.config.currencySymbol}}{{formatAmount variants.0.price}}
+                </h4>
+                {{/if}}
+            </div>
+            {{else}}
+            <h4 class="product-price mp-0 text-center">
+                {{currencySymbol @root.config.currencySymbol}}{{formatAmount productPrice}}
+            </h4>
+            {{/if}}
+            <p class="text-center">
+                {{#if @root.config.showHomepageVariants}}
+                <a class="btn btn-primary add-variant-to-cart" data-id="{{this._id}}" role="button">{{ @root.__ "Add
+                    to cart" }}</a>
+                {{else}}
+                <a class="btn btn-primary add-to-cart" data-id="{{this._id}}" data-link="{{this.productPermalink}}"
+                    data-has-variants="{{checkProductVariants this.variants}}" role="button">{{ @root.__ "Add to
+                    cart" }}</a>
+                {{/if}}
+            </p>
+        </div>
+    </div>
+    {{/each}}
+</div> --}}
+{{!-- </div> --}}
+<input type="hidden" id="itemsPerPage" value="{{productsPerPage}}">
+<input type="hidden" id="pageNum" value="{{pageNum}}">
+<input type="hidden" id="totalItemCount" value="{{totalProductCount}}">
+<input type="hidden" id="paginateUrl" value="{{paginateUrl}}">
+<input type="hidden" id="searchTerm" value="{{searchTerm}}">
+
+
+<!-- Humberger End -->
+<!-- Hero Section Begin -->
+<section class="hero hero-normal">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Danh Mục</span>
+                    </div>
+                    <ul>
+                        {{#each menu.items}}
+                        <li {{#menuMatch this.title @root.searchTerm}}{{/menuMatch}} {{#menuMatch this.title
+                            @root.title}}{{/menuMatch}}>
+                            <a href="{{this.link}}">{{this.title}}</a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            <div class="hero__search__categories">
+                                Toàn cửa hàng
+                                <span class="arrow_carrot-down"></span>
+                            </div>
+                            <input name="frm_search" id="frm_search" type="search" placeholder="Nhập từ khóa tìm kiếm">
+                            <button type="submit" id="btn_search" class="site-btn">Tìm kiếm</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>0965.105.459</h5>
+                            <span>Hỗ trợ 24/07</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/images/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Cửa Hàng Thực Phẩm</h2>
+                    <div class="breadcrumb__option">
+                        <a href="./index.html">Trang Chủ</a>
+                        <span>Cửa Hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-5">
+                <div class="sidebar">
+                    <div class="sidebar__item">
+                        <h4>Danh Mục</h4>
+                        <ul>
+                            {{#each menu.items}}
+                            <li {{#menuMatch this.title @root.searchTerm}}{{/menuMatch}} {{#menuMatch this.title
+                                @root.title}}{{/menuMatch}}>
+                                <a href="{{this.link}}">{{this.title}}</a>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    {{!-- <div class="sidebar__item">
+                        <h4>Price</h4>
+                        <div class="price-range-wrap">
+                            <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                                data-min="10" data-max="540">
+                                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                            </div>
+                            <div class="range-slider">
+                                <div class="price-input">
+                                    <input type="text" id="minamount">
+                                    <input type="text" id="maxamount">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar__item sidebar__item__color--option">
+                        <h4>Colors</h4>
+                        <div class="sidebar__item__color sidebar__item__color--white">
+                            <label for="white">
+                                White
+                                <input type="radio" id="white">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__color sidebar__item__color--gray">
+                            <label for="gray">
+                                Gray
+                                <input type="radio" id="gray">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__color sidebar__item__color--red">
+                            <label for="red">
+                                Red
+                                <input type="radio" id="red">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__color sidebar__item__color--black">
+                            <label for="black">
+                                Black
+                                <input type="radio" id="black">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__color sidebar__item__color--blue">
+                            <label for="blue">
+                                Blue
+                                <input type="radio" id="blue">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__color sidebar__item__color--green">
+                            <label for="green">
+                                Green
+                                <input type="radio" id="green">
+                            </label>
+                        </div>
+                    </div> --}}
+                    {{!-- <div class="sidebar__item">
+                        <h4>Popular Size</h4>
+                        <div class="sidebar__item__size">
+                            <label for="large">
+                                Large
+                                <input type="radio" id="large">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__size">
+                            <label for="medium">
+                                Medium
+                                <input type="radio" id="medium">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__size">
+                            <label for="small">
+                                Small
+                                <input type="radio" id="small">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__size">
+                            <label for="tiny">
+                                Tiny
+                                <input type="radio" id="tiny">
+                            </label>
+                        </div>
+                    </div> --}}
+                    <div class="sidebar__item">
+                        <div class="latest-product__text">
+                            <h4>SP Bán Chạy</h4>
+                            <div class="latest-product__slider owl-carousel">
+                                <div class="latest-prdouct__slider__item">
+                                    {{#if topData.topProducts}}
+                                    {{#each topData.topProducts}}
+                                    <a href="#" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            {{#if this.productImage}}
+                                            <img style="max-width: 110px" src="{{this.productImage}}"
+                                                alt="{{this._id}}">
+                                            {{else}}
+                                            <img src="/images/placeholder.png" alt="{{this._id}}">
+                                            {{/if}}
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>{{this._id}}</h6>
+                                            <span> {{this.productPrice}}</span>
+                                        </div>
+
+                                    </a>
+                                    {{/each}}
+                                    {{else}}
+                                    {{!-- <h5 class="mt-3 mb-1 text-danger">Nothing to see yet. Do some orders.</h5> --}}
+                                    {{/if}}
+                                </div>
+                                <div class="latest-prdouct__slider__item">
+                                    {{#if topData1.topProducts}}
+                                    {{#each topData1.topProducts}}
+                                    <a href="#" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            {{#if this.productImage}}
+                                            <img style="max-width: 110px" src="{{this.productImage}}"
+                                                alt="{{this._id}}">
+                                            {{else}}
+                                            <img src="/images/placeholder.png" alt="{{this._id}}">
+                                            {{/if}}
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>{{this._id}}</h6>
+                                            <span>{{this.productPrice}}</span>
+                                        </div>
+
+                                    </a>
+                                    {{/each}}
+                                    {{else}}
+                                    {{!-- <h5 class="mt-3 mb-1 text-danger">Nothing to see yet. Do some orders.</h5> --}}
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-7">
+                <div class="product__discount">
+                    <div class="section-title product__discount__title">
+                        <h2>Giảm Giá</h2>
+                    </div>
+                    <div class="row">
+                        <div class="product__discount__slider owl-carousel">
+                            <div class="col-lg-4">
+                                <div class="product__discount__item">
+                                    <div class="product__discount__item__pic set-bg"
+                                        data-setbg="/images/img/product/discount/pd-1.jpg">
+                                        <div class="product__discount__percent">-20%</div>
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    {{!-- <div class="product__discount__item__text">
+                                        <span>Dried Fruit</span>
+                                        <h5><a href="#">Raisin’n’nuts</a></h5>
+                                        <div class="product__item__price">$30.00 <span>$36.00</span></div>
+                                    </div> --}}
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="product__discount__item">
+                                    <div class="product__discount__item__pic set-bg"
+                                        data-setbg="/images/img/product/discount/pd-2.jpg">
+                                        <div class="product__discount__percent">-20%</div>
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    {{!-- <div class="product__discount__item__text">
+                                        <span>Vegetables</span>
+                                        <h5><a href="#">Vegetables’package</a></h5>
+                                        <div class="product__item__price">$30.00 <span>$36.00</span></div>
+                                    </div> --}}
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="product__discount__item">
+                                    <div class="product__discount__item__pic set-bg"
+                                        data-setbg="/images/img/product/discount/pd-3.jpg">
+                                        <div class="product__discount__percent">-20%</div>
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    {{!-- <div class="product__discount__item__text">
+                                        <span>Dried Fruit</span>
+                                        <h5><a href="#">Mixed Fruitss</a></h5>
+                                        <div class="product__item__price">$30.00 <span>$36.00</span></div>
+                                    </div> --}}
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="product__discount__item">
+                                    <div class="product__discount__item__pic set-bg"
+                                        data-setbg="/images/img/product/discount/pd-4.jpg">
+                                        <div class="product__discount__percent">-20%</div>
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    {{!-- <div class="product__discount__item__text">
+                                        <span>Dried Fruit</span>
+                                        <h5><a href="#">Raisin’n’nuts</a></h5>
+                                        <div class="product__item__price">$30.00 <span>$36.00</span></div>
+                                    </div> --}}
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="product__discount__item">
+                                    <div class="product__discount__item__pic set-bg"
+                                        data-setbg="/images/img/product/discount/pd-5.jpg">
+                                        <div class="product__discount__percent">-20%</div>
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    {{!-- <div class="product__discount__item__text">
+                                        <span>Dried Fruit</span>
+                                        <h5><a href="#">Raisin’n’nuts</a></h5>
+                                        <div class="product__item__price">$30.00 <span>$36.00</span></div>
+                                    </div> --}}
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="product__discount__item">
+                                    <div class="product__discount__item__pic set-bg"
+                                        data-setbg="/images/img/product/discount/pd-6.jpg">
+                                        <div class="product__discount__percent">-20%</div>
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    {{!-- <div class="product__discount__item__text">
+                                        <span>Dried Fruit</span>
+                                        <h5><a href="#">Raisin’n’nuts</a></h5>
+                                        <div class="product__item__price">$30.00 <span>$36.00</span></div>
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter__item">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5">
+                            {{!-- <div class="filter__sort">
+                                <span>Tìm kiếm</span>
+                                <select>
+                                    <option value="0">Default</option>
+                                    <option value="0">Default</option>
+                                </select>
+                            </div> --}}
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <div class="filter__found">
+                                <h6><span>12</span> sản phẩm</h6>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-3">
+                            <div class="filter__option">
+                                <span class="icon_grid-2x2"></span>
+                                <span class="icon_ul"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {{#each results}}
+                    {{#if productPermalink}}
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product__item">
+
+                            {{#if productImage}}
+                            <div class="product__item__pic set-bg" data-setbg="{{this.productImage}}">
+                                <ul class="product__item__pic__hover">
+                                    {{!-- <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li> --}}
+                                    <li>
+                                        {{#if @root.config.showHomepageVariants}}
+                                        <a data-id="{{this._id}}" href="#"><i
+                                                class="fa fa-shopping-cart add-variant-to-cart"></i></a>
+                                        {{else}}
+                                        <a class="fa fa-shopping-cart add-to-cart" data-id="{{this._id}}"
+                                            data-link="{{this.productPermalink}}"
+                                            data-has-variants="{{checkProductVariants this.variants}}"></a>
+                                        {{/if}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+
+                                <h6><a href="/product/{{this.productPermalink}}">{{this.productTitle}}</a></h6>
+                                {{#if variants}}
+                                <div class="col-md-12">
+                                    {{#if @root.config.showHomepageVariants}}
+                                    <select id="productVariant-{{this._id}}" class="productVariant form-control mb-2">
+                                        {{#each variants}}
+                                        <option value="{{this._id}}" data-price="{{this.price}}">{{this.title}} -
+                                            {{currencySymbol
+                                            @root.config.currencySymbol}}{{this.price}}</option>
+                                        {{/each}}
+                                    </select>
+                                    {{else}}
+                                    <h5>
+                                        {{formatAmount variants.0.price}} {{currencySymbol @root.config.currencySymbol}}
+                                    </h5>
+                                    {{/if}}
+                                </div>
+                                {{else}}
+                                <h5>
+                                    {{formatAmount productPrice}} {{currencySymbol @root.config.currencySymbol}}
+                                </h5>
+                                {{/if}}
+                            </div>
+                            {{else}}
+                            <div class="product__item__pic set-bg" data-setbg="/uploads/placeholder.png">
+                                <ul class="product__item__pic__hover">
+                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                    <li>
+                                        {{#if @root.config.showHomepageVariants}}
+                                        <a data-id="{{this._id}}" href="#"><i
+                                                class="fa fa-shopping-cart add-variant-to-cart"></i></a>
+                                        {{else}}
+                                        <a class="fa fa-shopping-cart add-to-cart" data-id="{{this._id}}"
+                                            data-link="{{this.productPermalink}}"
+                                            data-has-variants="{{checkProductVariants this.variants}}"></a>
+                                        {{/if}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">{{this.productTitle}}</a></h6>
+                                {{#if variants}}
+                                <div class="col-md-12">
+                                    {{#if @root.config.showHomepageVariants}}
+                                    <select id="productVariant-{{this._id}}" class="productVariant form-control mb-2">
+                                        {{#each variants}}
+                                        <option value="{{this._id}}" data-price="{{this.price}}">{{this.title}} -
+                                            {{currencySymbol
+                                            @root.config.currencySymbol}}{{this.price}}</option>
+                                        {{/each}}
+                                    </select>
+                                    {{else}}
+                                    <h5>
+                                        {{currencySymbol @root.config.currencySymbol}}{{formatAmount variants.0.price}}
+                                    </h5>
+                                    {{/if}}
+                                </div>
+                                {{else}}
+                                <h5>
+                                    {{currencySymbol @root.config.currencySymbol}}{{formatAmount productPrice}}
+                                </h5>
+                                {{/if}}
+                            </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                <div id="pager" class="product__pagination">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->

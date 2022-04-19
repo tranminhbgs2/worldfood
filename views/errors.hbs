@@ -1,0 +1,51 @@
+<div class="col-9">
+    <h3>Error</h3>
+    <div class="container mt-4 ml-0">
+        {{#if result.cause}}
+        <div class="row">
+            <div class="col">Cause</div>
+            <div class="col">
+                <p>
+                    {{result.cause }}
+                </p>
+            </div>
+        </div>
+        {{/if}}
+
+        {{#if result.explanation}}
+        <div class="row">
+            <div class="col">Explanation</div>
+            <div class="col">
+                <p>
+                    {{result.explanation}}
+                </p>
+            </div>
+        </div>
+        {{/if}}
+        {{#if result.field}}
+        <div class="row">
+            <div class="col">Field</div>
+            <div class="col">
+                <p>
+                   {{result.field}}
+                </p>
+            </div>
+        </div>
+        {{/if}}
+        {{#if result.validationType}}
+        <div class="row">
+            <div class="col">Validation type</div>
+            <div class="col">
+                <p>
+                    {{result.validationType}}
+                </p>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
+</div>
+</div>
+</body>
+
+</html>

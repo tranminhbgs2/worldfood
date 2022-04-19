@@ -1,0 +1,54 @@
+{
+    "cartTitle": "Ogani",
+    "cartDescription": "Ogani",
+    "cartLogo": "https://oganiviet.herokuapp.com/images/img/logo.png",
+    "baseUrl": "http://123.31.12.33:3000",
+    "emailHost": "smtp.gmail.com",
+    "emailPort": 465,
+    "emailSecure": true,
+    "emailUser": "meiiforjob@gmail.com",
+    "emailPassword": "pojrmmldcnohtnob",
+    "emailAddress": "meiiforjob@gmail.com",
+    "productsPerRow": 4,
+    "productsPerPage": 12,
+    "footerHtml": "",
+    "googleAnalytics": "",
+    "injectJs": "",
+    "customCss": "",
+    "currencySymbol": "₫",
+    "paymentGateway": "instore",
+    "databaseConnectionString": "mongodb+srv://dbUser:Prototype.9@cluster0.rysjo.mongodb.net/expresscart?retryWrites=true&w=majority",
+    "databaseConnectionStringv2": "mongodb://expresscart:Expresscart2022@localhost:10086/expresscart",
+    "databaseConnectionString1": "mongodb://localhost:27017/expresscart",
+    "theme": "Cloth",
+    "trackStock": false,
+    "orderHook": "",
+    "availableLanguages": [
+        "en",
+        "it"
+    ],
+    "defaultLocale": "en",
+    "maxQuantity": 25,
+    "twitterHandle": "",
+    "facebookAppId": "",
+    "productOrderBy": "date",
+    "productOrder": "descending",
+    "modules": {
+        "enabled": {
+            "shipping": "shipping-basic",
+            "discount": "discount-voucher",
+            "reviews": "reviews-basic"
+        },
+        "loaded": {
+            "shipping": {},
+            "discount": {},
+            "reviews": {}
+        }
+    },
+    "showRelatedProducts": true,
+    "showHomepageVariants": false,
+    "secretCookie": "a6135a6b8a9bffeaec2f58b76f297135c1b50b04",
+    "secretSession": "354a007e242dc23bda33781a69cdf2bd0ef6b30b",
+    "themeViews": "../views/themes/Cloth/",
+    "env": ""
+}

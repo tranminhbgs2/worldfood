@@ -1,0 +1,174 @@
+
+    <!-- Hero Section Begin -->
+<section class="hero hero-normal">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Danh Mục</span>
+                    </div>
+                    <ul>
+                        {{#each menu.items}}
+                        <li {{#menuMatch this.title @root.searchTerm}}{{/menuMatch}} {{#menuMatch this.title
+                            @root.title}}{{/menuMatch}}>
+                            <a href="{{this.link}}">{{this.title}}</a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            <div class="hero__search__categories">
+                                Toàn cửa hàng
+                                <span class="arrow_carrot-down"></span>
+                            </div>
+                            <input name="frm_search" id="frm_search" type="search" placeholder="What do you need?">
+                            <button type="submit" id="btn_search" class="site-btn">SEARCH</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>0965.105.459</h5>
+                            <span>Hỗ trợ 24/07</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/images/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Organi Shop</h2>
+                    <div class="breadcrumb__option">
+                        <a href="/">Home</a>
+                        <span>Check Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container d-flex justify-content-center mt-5 mb-5">
+    <div class="row g-3">
+        <div class="col-md-6"> <span>Phương thức thanh toán</span>
+               
+            <input type="text" id="order-id" hidden class="form-control input-md" value="{{ result.orderId}}" />
+            <input type="text" id="order-amount" hidden class="form-control input-md" value="{{ result.orderAmount}}" maxlength="14" />
+            <input type="text" id="total-cart-shipping" hidden class="form-control input-md" value="{{ result.totalCartShipping }}" maxlength="14" />
+            <input type="text" id="total-cart-discount" hidden class="form-control input-md" value="{{ result.totalCartDiscount }}" maxlength="14" />
+            <input type="text" id="order-currency" hidden class="form-control input-md" value="{{result.orderCurrency}}" maxlength="3" />
+            <input type="text" id="order-description" hidden class="form-control input-md" value="{{ result.orderDescription}}" maxlength="127" />
+            <input type="text" id="transaction-id" hidden class="form-control input-md" value="{{ result.transactionId}}" />
+            <div class="card">
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header p-0">
+                            <h2 class="mb-0"> <button class="btn btn-light btn-block text-left p-3 rounded-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <div class="d-flex align-items-center justify-content-between"> <span>Credit card</span>
+                                        <div class="icons"> <img src="https://i.imgur.com/2ISgYja.png" width="30"> <img src="https://i.imgur.com/W1vtnOV.png" width="30"> <img src="https://i.imgur.com/35tC99g.png" width="30"> <img src="https://i.imgur.com/2ISgYja.png" width="30"> </div>
+                                    </div>
+                                </button> </h2>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body payment-card-body"> 
+                                <span class="font-weight-normal card-text" for="card-number">Card Number</span>
+                                <div class="input">
+                                        <i class="fa fa-credit-card"></i> 
+                                        <input type="text" class="form-control" id="card-number" placeholder="0000 0000 0000 0000" readonly>
+                                </div>
+                                <div class="row mt-3 mb-3">
+                                    <div class="col-md-6"> 
+                                        <span class="font-weight-normal card-text" for="expiry-month">Expiry Month</span>
+                                        <div class="input"> 
+                                            <i class="fa fa-calendar"></i> 
+                                            <input type="text" id="expiry-month" class="form-control" placeholder="MM/YY" readonly> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"> 
+                                        <span class="font-weight-normal card-text" for="expiry-year">Expiry Year</span>
+                                        <div class="input"> 
+                                            <i class="fa fa-calendar"></i> 
+                                            <input type="text" class="form-control" id="expiry-year" placeholder="YY" readonly> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-3">
+                                    <div class="col-md-6"> 
+                                        <span class="font-weight-normal card-text" for="security-code">CVC/CVV</span>
+                                        <div class="input"> 
+                                            <i class="fa fa-lock"></i> 
+                                            <input type="text" id="security-code" class="form-control" placeholder="000" readonly> 
+                                        </div>
+                                    </div>
+                                </div> 
+                                <span class="text-muted certificate-text"><i class="fa fa-lock"></i> Your transaction is secured with ssl certificate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6"> <span>Thông tin thanh toán</span>
+        {{result}}
+            <div class="card">
+                <div class="d-flex justify-content-between p-3">
+                    <div class="d-flex flex-column"> Tổng tiền thanh toán</div>
+                    <div class="mt-1"> <sup class="super-price">{{ result.orderAmount}} {{result.orderCurrency}}</sup></div>
+                </div>
+                <hr class="mt-0 line">
+                <div class="p-3">
+                    <div class="d-flex justify-content-between mb-2"> <span>Phí ship</span> <span>{{ result.totalCartShipping }} {{result.orderCurrency}}</span> </div>
+                    <div class="d-flex justify-content-between"> <span>Giảm giá <i class="fa fa-clock-o"></i></span> <span>{{ result.totalCartDiscount }} {{result.orderCurrency}}</span> </div>
+                </div>
+                <hr class="mt-0 line">
+                <div class="p-3 d-flex justify-content-between">
+                    <div class="d-flex flex-column"> <span>Tổng thanh toán</span> </div> <span>{{ result.totalCartNetAmount}} {{result.orderCurrency}}</span>
+                </div>
+                <div class="p-3"> 
+                    <button class="btn btn-primary btn-block free-button" id="payButton" onclick="pay();">Thanh toán</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- row -->
+</div>
+    </div>
+    </div>
+    <script src="{{result.baseUrl}}/form/version/{{result.apiVersion}}/merchant/{{result.merchant}}/session.js"></script>
+    <script type="text/javascript">
+        var NodeSample = {
+            operation: function () {
+                return "PAY";
+            },
+            endpoint: function () {
+                return "/instore/pay";
+            },
+            params: function () {
+                return "";
+            },
+            secureIdResponseUrl: function () {
+                return null;
+            }
+        };
+    </script>
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+    <script src="/javascripts/hostedSession.js"></script>
+    </body>
+
+    </html>

@@ -1,0 +1,155 @@
+    <!-- Hero Section Begin -->
+<section class="hero hero-normal">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Danh Mục</span>
+                    </div>
+                    <ul>
+                        {{#each menu.items}}
+                        <li {{#menuMatch this.title @root.searchTerm}}{{/menuMatch}} {{#menuMatch this.title
+                            @root.title}}{{/menuMatch}}>
+                            <a href="{{this.link}}">{{this.title}}</a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            <div class="hero__search__categories">
+                                Toàn cửa hàng
+                                <span class="arrow_carrot-down"></span>
+                            </div>
+                            <input name="frm_search" id="frm_search" type="search" placeholder="What do you need?">
+                            <button type="submit" id="btn_search" class="site-btn">SEARCH</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>0965.105.459</h5>
+                            <span>Hỗ trợ 24/07</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/images/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Organi Shop</h2>
+                    <div class="breadcrumb__option">
+                        <a href="/">Home</a>
+                        <span>Check Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <div class="col-12 pl-4">
+         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 padding">
+     <div class="card">
+         <div class="card-header p-4">
+             <a class="pt-2 d-inline-block" href="/" data-abc="true">worldfood.asia</a>
+             <div class="float-right">
+                 <h3 class="mb-0">Mã đơn hàng {{order._id}}</h3>
+                 Ngày: {{formatDate order.orderDate "DD/MM/YYYY hh:mmA"}}
+             </div>
+         </div>
+         <div class="card-body">
+             <div class="row mb-4">
+                 <div class="col-sm-6">
+                     <h5 class="mb-3">From:</h5>
+                     <h3 class="text-dark mb-1">worldfood.asia</h3>
+                     <div>Tầng 12, tòa nhà Việt Á</div>
+                     <div>Số 9 Duy Tân, Cầu Giấy, Hà Nội</div>
+                     <div>Email: sales@worldfood.asia</div>
+                     <div>Phone: +84-2462944447</div>
+                 </div>
+                 <div class="col-sm-6 ">
+                     <h5 class="mb-3">To:</h5>
+                     <h3 class="text-dark mb-1">{{order.orderLastname}} {{order.orderFirstname}}</h3>
+                     <div>{{order.orderAddr1}} {{order.orderAddr2}}</div>
+                     <div>{{order.orderState}} {{order.orderCountry}}</div>
+                     <div>Email: {{order.orderEmail}}</div>
+                     <div>Phone: {{order.orderPhoneNumber}}</div>
+                 </div>
+             </div>
+             <div class="table-responsive-sm">
+                 <table class="table table-striped">
+                     <thead>
+                         <tr>
+                             <th class="center">#</th>
+                             <th>Tên sản phẩm</th>
+                             <th>Description</th>
+                             <th class="right">Giá</th>
+                             <th class="right">Số lượng</th>
+                             <th class="right">Thành tiền</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                        {{#each order.orderProducts}}
+                         <tr>
+                             <td class="center">1</td>
+                             <td class="left strong">{{this.title}}</td>
+                             <td class="left">{{formatAmount this.productSubscription}}</td>
+                             <td class="right">{{this.productPrice}} VNĐ</td>
+                             <td class="right">{{ this.quantity}}</td>
+                             <td class="right">{{formatAmount this.totalItemPrice}} VNĐ</td>
+                         </tr>
+                        {{/each}}
+                     </tbody>
+                 </table>
+             </div>
+             <div class="row">
+                 <div class="col-lg-4 col-sm-5">
+                 </div>
+                 <div class="col-lg-4 col-sm-5 ml-auto">
+                     <table class="table table-clear">
+                         <tbody>
+                             <tr>
+                                 <td class="left">
+                                     <strong class="text-dark">Giảm giá</strong>
+                                 </td>
+                                 <td class="right">{{formatAmount order.orderProducts }} VNĐ</td>
+                             </tr>
+                             <tr>
+                                 <td class="left">
+                                     <strong class="text-dark">Thành tiền</strong> </td>
+                                 <td class="right">
+                                     <strong class="text-dark">{{formatAmount order.orderTotal }} VNĐ</strong>
+                                 </td>
+                             </tr>
+                         </tbody>
+                     </table>
+                 </div>
+             </div>
+         </div>
+         <div class="card-footer bg-white">
+             <p class="mb-0">worldfood.asia, Số 9 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội</p>
+         </div>
+     </div>
+ </div>
+    </div>
+    <!-- row -->
+    </div>
+    </div>
+    </body>
+
+    </html>

@@ -1,0 +1,535 @@
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Sản phẩm</span>
+                    </div>
+                    <ul>
+                        {{#each menu.items}}
+                        <li {{#menuMatch this.title @root.searchTerm}}{{/menuMatch}} {{#menuMatch this.title
+                            @root.title}}{{/menuMatch}}>
+                            <a href="{{this.link}}">{{this.title}}</a>
+                        </li>
+                        {{/each}}
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            <div class="hero__search__categories">
+                                Toàn cửa hàng
+                                <span class="arrow_carrot-down"></span>
+                            </div>
+                            <input name="frm_search" id="frm_search" type="search" placeholder="Nhập sản phẩm...">
+                            <button type="submit" id="btn_search" class="site-btn">Tìm Kiếm</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>+84 965.105.459</h5>
+                            <span>Hỗ trợ 24/7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__item set-bg" data-setbg="/images/img/hero/banner.jpg">
+                    <div class="hero__text">
+                        <span>Hộ trợ</span>
+                        <h2>Giải Cứu<br />Nông Sản</h2>
+                        <p>Đem nông sản đến với tay người tiêu dùng</p>
+                        <a href="/shop" class="primary-btn">Tới cửa hàng</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+{{!-- {{> themes/Cloth/front-menu}}
+<div class="productsWrapper col-sm-12 col-md-8 offset-md-2">
+    {{#if filtered}}
+    <div class="product-layout product-results col-sm-12">
+        {{#ifCond @root.paginateUrl '==' 'category'}}
+        <h1>{{ @root.__ "Category" }}: <strong>{{@root.searchTerm}}</strong></h1>
+        {{else}}
+        <h1>{{ @root.__ "Search results" }}: <strong>{{@root.searchTerm}}</strong></h1>
+        {{/ifCond}}
+    </div>
+    {{/if}}
+    <div class="row product-layout">
+        {{#ifCond results.length '==' 0}}
+        <div class="col-sm-12">
+            <p class="text-danger">{{ @root.__ "No products found" }}</p>
+        </div>
+        {{/ifCond}}
+        {{#each results}}
+        <div class="{{perRowClass ../config.productsPerRow}}">
+            <div class="thumbnail">
+                {{#if productPermalink}}
+                <div class="product-wrapper">
+                    <a href="/product/{{this.productPermalink}}">
+                        <div class="vertical-center img-thumbnail">
+                            {{#if productImage}}
+                            <img class="img-fluid" src="{{this.productImage}}" alt="...">
+                            {{else}}
+                            <img class="img-fluid" src="/uploads/placeholder.png" alt="...">
+                            {{/if}}
+                        </div>
+                        <h3 class="product-title product-title-home top-pad-10">
+                            {{this.productTitle}}
+                        </h3>
+                    </a>
+                </div>
+                {{else}}
+                <a href="/product/{{this._id}}">
+                    <div class="vertical-center img-thumbnail">
+                        {{#if productImage}}
+                        <img class="img-fluid" src="{{this.productImage}}" alt="...">
+                        {{else}}
+                        <img class="img-fluid" src="/uploads/placeholder.png" alt="...">
+                        {{/if}}
+                    </div>
+                    <h3 class="product-title product-title-home top-pad-10">
+                        {{this.productTitle}}
+                    </h3>
+                </a>
+                {{/if}}
+                {{#if variants}}
+                <div class="col-md-12">
+                    {{#if @root.config.showHomepageVariants}}
+                    <select id="productVariant-{{this._id}}" class="productVariant form-control mb-2">
+                        {{#each variants}}
+                        <option value="{{this._id}}" data-price="{{this.price}}">{{this.title}} - {{currencySymbol
+                            @root.config.currencySymbol}}{{this.price}}</option>
+                        {{/each}}
+                    </select>
+                    {{else}}
+                    <h4 class="product-price mp-0 text-center">
+                        {{currencySymbol @root.config.currencySymbol}}{{formatAmount variants.0.price}}
+                    </h4>
+                    {{/if}}
+                </div>
+                {{else}}
+                <h4 class="product-price mp-0 text-center">
+                    {{currencySymbol @root.config.currencySymbol}}{{formatAmount productPrice}}
+                </h4>
+                {{/if}}
+                <p class="text-center">
+                    {{#if @root.config.showHomepageVariants}}
+                    <a class="btn btn-primary add-variant-to-cart" data-id="{{this._id}}" role="button">{{ @root.__ "Add
+                        to cart" }}</a>
+                    {{else}}
+                    <a class="btn btn-primary add-to-cart" data-id="{{this._id}}" data-link="{{this.productPermalink}}"
+                        data-has-variants="{{checkProductVariants this.variants}}" role="button">{{ @root.__ "Add to
+                        cart" }}</a>
+                    {{/if}}
+                </p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<input type="hidden" id="itemsPerPage" value="{{productsPerPage}}">
+<input type="hidden" id="pageNum" value="{{pageNum}}">
+<input type="hidden" id="totalItemCount" value="{{totalProductCount}}">
+<input type="hidden" id="paginateUrl" value="{{paginateUrl}}">
+<input type="hidden" id="searchTerm" value="{{searchTerm}}">
+<div class="col-md-12">
+    <div id="pager" class="d-flex justify-content-center"></div>
+</div> --}}
+{{!-- <section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="hero__item set-bg" data-setbg="/images/img/hero/banner.jpg">
+                    <div class="hero__text">
+                        <span>FRUIT FRESH</span>
+                        <h2>Vegetable <br />100% Organic</h2>
+                        <p>Free Pickup and Delivery Available</p>
+                        <a href="#" class="primary-btn">SHOP NOW</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> --}}
+<!-- Categories Section Begin -->
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories__slider owl-carousel">
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="/images/img/categories/cat-1.jpg">
+                        <h5><a href="/category/fruit">Trái cây</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="/images/img/categories/cat-2.jpg">
+                        <h5><a href="/category/nuts">Sữa hạt</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="/images/img/categories/cat-3.jpg">
+                        <h5><a href="/category/vegetables">Rau củ quả</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="/images/img/categories/cat-4.jpg">
+                        <h5><a href="/category/juice">Nước ép</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="/images/img/categories/cat-5.jpg">
+                        <h5><a href="/category/freshmeat">Thịt bò</a></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Sản Phẩm Nổi Bật</h2>
+                </div>
+                <div class="featured__controls">
+                    <ul>
+                        <li class="active" data-filter="*">Tất cả</li>
+                        <li data-filter=".oranges">Trái cây & Hạt</li>
+                        <li data-filter=".fresh-meat">Thịt Tươi</li>
+                        <li data-filter=".vegetables">Rau Củ Quả</li>
+                        <li data-filter=".fastfood">Sữa Hạt</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="/images/img/featured/feature-1.jpg">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="/images/img/featured/feature-2.jpg">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="/images/img/featured/feature-3.jpg">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood oranges">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="/images/img/featured/feature-4.jpg">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="/images/img/featured/feature-5.jpg">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fastfood">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="/images/img/featured/feature-6.jpg">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="/images/img/featured/feature-7.jpg">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="/images/img/featured/feature-8.jpg">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Featured Section End -->
+
+<!-- Banner Begin -->
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="/images/img/banner/banner-1.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="/images/img/banner/banner-2.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner End -->
+
+<!-- Latest Product Section Begin -->
+<section class="latest-product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Sản Phẩm Bán Chạy</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            {{#if topData.topProducts}}
+                            {{#each topData.topProducts}}
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    {{#if this.productImage}}
+                                    <img style="max-width: 110px" src="{{this.productImage}}" alt="{{this._id}}">
+                                    {{else}}
+                                    <img src="/images/placeholder.png" alt="{{this._id}}">
+                                    {{/if}}
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>{{this._id}}</h6>
+                                    <span> {{this.productPrice}}</span>
+                                </div>
+
+                            </a>
+                            {{/each}}
+                            {{else}}
+                            <h5 class="mt-3 mb-1 text-danger">Nothing to see yet. Do some orders.</h5>
+                            {{/if}}
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            {{#if topData1.topProducts}}
+                            {{#each topData1.topProducts}}
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    {{#if this.productImage}}
+                                    <img style="max-width: 110px" src="{{this.productImage}}" alt="{{this._id}}">
+                                    {{else}}
+                                    <img src="/images/placeholder.png" alt="{{this._id}}">
+                                    {{/if}}
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>{{this._id}}</h6>
+                                    <span>{{this.productPrice}}</span>
+                                </div>
+
+                            </a>
+                            {{/each}}
+                            {{else}}
+                            <h5 class="mt-3 mb-1 text-danger">Nothing to see yet. Do some orders.</h5>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Sản Phẩm Bán Chạy</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            {{#if topData.topProducts}}
+                            {{#each topData.topProducts}}
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    {{#if this.productImage}}
+                                    <img style="max-width: 110px" src="{{this.productImage}}" alt="{{this._id}}">
+                                    {{else}}
+                                    <img src="/images/placeholder.png" alt="{{this._id}}">
+                                    {{/if}}
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>{{this._id}}</h6>
+                                    <span> {{this.productPrice}}</span>
+                                </div>
+
+                            </a>
+                            {{/each}}
+                            {{else}}
+                            <h5 class="mt-3 mb-1 text-danger">Nothing to see yet. Do some orders.</h5>
+                            {{/if}}
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            {{#if topData1.topProducts}}
+                            {{#each topData1.topProducts}}
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    {{#if this.productImage}}
+                                    <img style="max-width: 110px" src="{{this.productImage}}" alt="{{this._id}}">
+                                    {{else}}
+                                    <img src="/images/placeholder.png" alt="{{this._id}}">
+                                    {{/if}}
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>{{this._id}}</h6>
+                                    <span>{{this.productPrice}}</span>
+                                </div>
+
+                            </a>
+                            {{/each}}
+                            {{else}}
+                            <h5 class="mt-3 mb-1 text-danger">Nothing to see yet. Do some orders.</h5>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Sản Phẩm Bán Chạy</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            {{#if topData.topProducts}}
+                            {{#each topData.topProducts}}
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    {{#if this.productImage}}
+                                    <img style="max-width: 110px" src="{{this.productImage}}" alt="{{this._id}}">
+                                    {{else}}
+                                    <img src="/images/placeholder.png" alt="{{this._id}}">
+                                    {{/if}}
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>{{this._id}}</h6>
+                                    <span> {{this.productPrice}}</span>
+                                </div>
+
+                            </a>
+                            {{/each}}
+                            {{else}}
+                            <h5 class="mt-3 mb-1 text-danger">Nothing to see yet. Do some orders.</h5>
+                            {{/if}}
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            {{#if topData1.topProducts}}
+                            {{#each topData1.topProducts}}
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    {{#if this.productImage}}
+                                    <img style="max-width: 110px" src="{{this.productImage}}" alt="{{this._id}}">
+                                    {{else}}
+                                    <img src="/images/placeholder.png" alt="{{this._id}}">
+                                    {{/if}}
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>{{this._id}}</h6>
+                                    <span>{{this.productPrice}}</span>
+                                </div>
+
+                            </a>
+                            {{/each}}
+                            {{else}}
+                            <h5 class="mt-3 mb-1 text-danger">Nothing to see yet. Do some orders.</h5>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Latest Product Section End -->
+
+<!-- Blog Section Begin -->
+<section class="from-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title from-blog__title">
+                    <h2>Thông Tin Bổ Ích</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic">
+                        <img src="/images/img/blog/blog-1.jpg" alt="">
+                    </div>
+                    <div class="blog__item__text">
+                        <ul>
+                            <li><i class="fa fa-calendar-o"></i> Tháng 4,2021</li>
+                            <li><i class="fa fa-comment-o"></i> 0</li>
+                        </ul>
+                        <h5><a href="#">Mẹo nấu ăn đơn giản</a></h5>
+                        <p>Cùng trải nghiệm những mẹo nấu ăn đơn giản hữu ích...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic">
+                        <img src="/images/img/blog/blog-2.jpg" alt="">
+                    </div>
+                    <div class="blog__item__text">
+                        <ul>
+                            <li><i class="fa fa-calendar-o"></i> Tháng 4,2021</li>
+                            <li><i class="fa fa-comment-o"></i> 0</li>
+                        </ul>
+                        <h5><a href="#">6 cách chuẩn bị bữa sáng tiện lợi</a></h5>
+                        <p>Nếu bạn là một người bận rộn, hãy trải nghiệm những cách nấu bữa sáng đơn giản sau... </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic">
+                        <img src="/images/img/blog/blog-3.jpg" alt="">
+                    </div>
+                    <div class="blog__item__text">
+                        <ul>
+                            <li><i class="fa fa-calendar-o"></i> Tháng 4,2021</li>
+                            <li><i class="fa fa-comment-o"></i> 0</li>
+                        </ul>
+                        <h5><a href="#">Làm detox tốt cho sức khỏe</a></h5>
+                        <p>Một ly detox mỗi ngày sẽ giúp bạn trở lên khỏe mạnh hơn, cùng khám phá nhé... </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<input type="hidden" id="itemsPerPage" value="{{productsPerPage}}">
+<input type="hidden" id="pageNum" value="{{pageNum}}">
+<input type="hidden" id="totalItemCount" value="{{totalProductCount}}">
+<input type="hidden" id="paginateUrl" value="{{paginateUrl}}">
+<input type="hidden" id="searchTerm" value="{{searchTerm}}">
+<!-- Blog Section End -->

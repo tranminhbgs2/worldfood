@@ -1,0 +1,229 @@
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/images/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Checkout</h2>
+                    <div class="breadcrumb__option">
+                        <a href="./index.html">Home</a>
+                        <span>Checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h6><span class="icon_tag_alt"></span> Bạn có mã giảm giá <a href="/checkout/cart">Click chọn</a> Để nhập mã giảm giá
+                </h6>
+            </div>
+        </div>
+        <div class="checkout__form">
+            <h4>Chi Tiết Thanh Toán</h4>
+            <form action="#">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        {{> themes/Cloth/shipping-form}}
+                        {{#unless @root.session.customerPresent}}
+                        <div class="col-sm-12">
+                            <p class="text-muted">
+                                {{ @root.__ "Enter a password to create an account for next time" }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="password" class="form-control customerDetails" id="newCustomerPassword"
+                                    name="newCustomerPassword" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="createAccountCheckbox"> Create an account
+                                </label>
+                            </div>
+                        </div>
+                        {{/unless}}
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="checkout__order">
+                            <h4>Hóa đơn</h4>
+                            <div class="checkout__order__products">Sản phẩm <span>Tổng tiền</span></div>
+                            <ul>
+                                {{#each @root.session.cart}}
+                                <li>{{this.title}} <span> {{currencySymbol @root.config.currencySymbol}}{{formatAmount
+                                        this.totalItemPrice}}</span></li>
+                                {{/each}}
+                            </ul>
+                            {{!-- oder amount --}}
+                            {{#if @root.session.cart}}
+                            {{#ifCond @root.session.totalCartDiscount '>' 0}}
+                            {{#ifCond @root.session.totalCartShipping '>' 0}}
+                            <div class="checkout__order__subtotal">
+                                <span id="shipping-amount"></span>{{currencySymbol
+                                @root.config.currencySymbol}}{{formatAmount @root.session.totalCartShipping}}</span>
+                            </div>
+                            {{else}}
+                            <div class="checkout__order__subtotal">
+                                <span id="shipping-amount">{{@root.session.shippingMessage}}</span>
+                            </div>
+                            {{/ifCond}}
+                            <div class="checkout__order__subtotal">Discount <span id="discount-amount">{{currencySymbol
+                                    @root.config.currencySymbol}}{{formatAmount @root.session.totalCartDiscount}}</span>
+                            </div>
+                            {{/ifCond}}
+                            <div class="checkout__order__total">Tổng tiền <span>{{currencySymbol
+                                    @root.config.currencySymbol}}{{formatAmount
+                                    @root.session.totalCartAmount}}</span></div>
+                            {{/if}}
+                            {{!-- <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
+                                ut labore et dolore magna aliqua.</p>
+                            <div class="checkout__input__checkbox">
+                                <label for="payment">
+                                    Check Payment
+                                    <input type="checkbox" id="payment">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="checkout__input__checkbox">
+                                <label for="paypal">
+                                    Paypal
+                                    <input type="checkbox" id="paypal">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div> --}}
+                            {{!-- <form id="shipping-form" class="shipping-form" action="/instore/checkout_action"
+                                method="post" role="form" data-toggle="validator" novalidate="true">
+                                <div class="instore_button col-sm-12 text-center">
+                                    <button id="checkout_instore" class="site-btn" type="submit">Place
+                                        order, pay
+                                        instore</button>
+                                    <button id="checkout_instore" class="btn btn-outline-success" type="submit">Place
+                                        order, pay
+                                        instore</button>
+                                </div>
+                            </form> --}}
+                            <a href="/checkout/payment" id="checkoutInformation" class="site-btn">TIẾN HÀNG THANH TOÁN</a>
+                            {{!-- <form id="shipping-form" class="shipping-form"
+                                action="/{{config.paymentGateway}}/checkout_action{{@root.paymentType}}" method="post"
+                                role="form" data-toggle="validator" novalidate="false">
+                                {{#if session.customerPresent}}
+                                {{> (partial config.paymentGateway) }}
+                                {{/if}}
+                            </form> --}}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Checkout Section End -->
+
+{{!-- <div class="col-md-10 offset-md-1 col-sm-12">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/checkout/information">Information</a></li>
+            {{#if @root.session.customerPresent}}
+            <li class="breadcrumb-item" aria-current="page"><a href="/checkout/shipping">Shipping</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/checkout/payment">Payment</a></li>
+            {{else}}
+            <li class="breadcrumb-item text-muted" aria-current="page">Shipping</li>
+            <li class="breadcrumb-item text-muted" aria-current="page">Payment</li>
+            {{/if}}
+        </ol>
+    </nav>
+    <div class="row">
+        {{#if paymentMessage}}
+        <div class="col-sm-12">
+            <p class="text-danger text-center">{{paymentMessage}}</p>
+        </div>
+        {{/if}}
+        <div class="col-12 col-md-5 bottom-pad-15">
+            <div class="card top-marg-15">
+                <div class="card-body customer-details-login">
+                    <h5 class="card-heading">{{ @root.__ "Customer details" }}</h5>
+                    {{#unless @root.session.customerPresent}}
+                    <div class="row">
+                        <div class="col-sm-12 bottom-marg-15">
+                            <p>{{ @root.__ "Existing customer" }}</p>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="customerLoginEmail" name="loginEmail"
+                                    minlength="5" placeholder="Email address" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="customerLoginPassword"
+                                    name="loginPassword" minlength="5" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <a href="/customer/forgotten" class="btn btn-primary float-left">{{ @root.__ "Forgotten"
+                                    }}</a>
+                            </div>
+                            <div class="form-group">
+                                <button id="customerLogin" class="btn btn-primary float-right"
+                                    type="submit">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{/unless}}
+                    {{#if @root.session.customerPresent}}
+                    <div class="row bottom-marg-15">
+                        <div class="col-sm-12">
+                            <button id="customerLogout" class="btn btn-primary float-right">{{ @root.__ "Change
+                                customer" }}</button>
+                        </div>
+                    </div>
+                    {{/if}}
+                    <form id="shipping-form" class="shipping-form" role="form" data-toggle="validator"
+                        novalidate="false">
+                        {{> themes/Cloth/shipping-form}}
+                        <div class="row">
+                            {{#unless @root.session.customerPresent}}
+                            <div class="col-sm-12">
+                                <p class="text-muted">
+                                    {{ @root.__ "Enter a password to create an account for next time" }}</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="password" class="form-control customerDetails" id="newCustomerPassword"
+                                        name="newCustomerPassword" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="createAccountCheckbox"> Create an account
+                                    </label>
+                                </div>
+                            </div>
+                            {{/unless}}
+                            <div class="col-sm-12">
+                                <a href="/checkout/cart" class="btn btn-primary float-left">Return to cart</a>
+                                <a href="/checkout/shipping" id="checkoutInformation"
+                                    class="btn btn-primary float-right">Continue to shipping</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 d-none d-sm-block" id="cart">
+            {{> (getTheme 'cart')}}
+            {{#if @root.session.cart}}
+            <div class="row">
+                <div class="col-sm-12 {{showCartButtons @root.session.cart}} cart-buttons">
+                    <button class="btn btn-danger float-right" id="empty-cart" type="button">{{ @root.__ "Empty cart"
+                        }}</button>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div> --}}

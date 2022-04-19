@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+
+<head>
+
+    {{~#if config.injectJs}}{{{config.injectJs}}}{{/if}}
+    <title>{{title}}</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:url" content="http://localhost:3000/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Nông sản sạch cho mọi nhà" />
+    <meta property="og:description"
+        content="Sản phẩm được sản xuất theo quy trình VIETGAP, đảm bảo an toàn, chất lượng sản phẩm." />
+    <meta property="og:image"
+        content="https://static.wikia.nocookie.net/you-zitsu/images/a/ab/Episode_010-07.jpg/revision/latest/scale-to-width-down/180?cb=20180721094243&path-prefix=vi" />
+
+    {{#if admin}}
+    <link rel="icon" type="image/png" href="img/logo.png" />
+    <!--[if IE]><link rel="SHORTCUT ICON" href="/images/favicon.png"/><![endif]-->
+    {{else}}
+    <link rel="icon" type="image/png" href="img/logo.png" />
+    <!--[if IE]><link rel="SHORTCUT ICON" href="/favicon.ico"/><![endif]-->
+    {{/if}}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {{#if productDescription}}
+    <meta name="description" content="{{snip productDescription}}">
+    {{else}}
+    {{#if metaDescription}}
+    <meta name="description" content="{{snip metaDescription}}">
+    {{else}}
+    <meta name="description" content="{{snip config.cartDescription}}">
+    {{/if}}
+    {{/if}}
+    <meta name="csrfToken" content="{{csrfToken}}">
+    <meta name="keywords" content="{{config.cartTitle}}">
+    {{!--
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" /> --}}
+    <link rel="stylesheet" href="/stylesheets/pushy{{config.env}}.css">
+    {{#if admin}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/css/gijgo.min.css"
+        integrity="sha256-bH0WSMuCFoG/dxeox/5aOWmaZl729yDg4ylckwSRTfU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.min.css"
+        integrity="sha256-MdzaXfGXzZdeHw/XEV2LNNycipsLk4uZ0FYzO3hbuvI=" crossorigin="anonymous" />
+    {{/if}}
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css"
+        integrity="sha256-4qBzeX420hElp9/FzsuqUNqVobcClz1BjnXoxUDSYQ0=" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="/stylesheets/codemirror-style.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/font-awesome.min.css">
+    <link rel="stylesheet" href="/stylesheets/elegant-icons.css">
+    <link rel="stylesheet" href="/stylesheets/nice-select.css">
+    <link rel="stylesheet" href="/stylesheets/jquery-ui.min.css">
+    <link rel="stylesheet" href="/stylesheets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/stylesheets/slicknav.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <!-- Google Font -->
+    {{!--
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    --}}
+    {{#if admin}}
+    <link rel="stylesheet" href="/stylesheets/admin{{config.env}}.css">
+    {{/if}}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"
+        integrity="sha256-x3YZWtRjM8bJqf48dFAv/qmgL68SI4jqNWeSLMZaMGA=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha256-WqU1JavFxSAMcLP2WIOI+GB2zWmShMI82mTpLDcqFUg=" crossorigin="anonymous"></script>
+    {{#if admin}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+        integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/js/gijgo.min.js"
+        integrity="sha256-YZhUu69bCn9uTqQyKwwQ3GyRypS7eaxp/wmVS282sDI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.min.js"
+        integrity="sha256-K1exjHe1X4MP24jRizgBaSbUDUrNhFDRSwGoEYGmtJE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/css/css.min.js"
+        integrity="sha256-D5oJ11cOmRhXSYWELwG2U/XYH3YveZJr9taRYLZ2DSM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/xml/xml.min.js"
+        integrity="sha256-ERFGS58tayDq5kkyNwd/89iZZ+HglMH7eYXxG1hxTvA=" crossorigin="anonymous"></script>
+    {{/if}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.25.0/feather.min.js"
+        integrity="sha256-NvgyqkM9Vu1DLHkzxTxXQxZNdDymUlwhXcSJEqUfPiU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"
+        integrity="sha256-LlHVI5rUauudM5ZcZaD6hHPHKrA7CSefHHnKgq+/AZc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js"
+        integrity="sha256-4lietOiwRDBKx1goZZbRiwB06L+/bPYEGDIKZt82bgg=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <script src="/javascripts/common{{config.env}}.js"></script>
+    <script src="/javascripts/expressCart{{config.env}}.js"></script>
+
+    {{!--
+    <script src="/javascripts/jquery-3.3.1.min.js"></script> --}}
+    <script src="/javascripts/jquery.bootpag.min.js"></script>
+    <script src="/javascripts/cssbeautify.min.js"></script>
+
+    {{#if admin}}
+    <script src="/javascripts/admin{{config.env}}.js"></script>
+    {{/if}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"
+        integrity="sha256-jdwX0QzXB7z7Xc7Vz0ovtIHWO5qIZWg0aLcGv44JDgE=" crossorigin="anonymous"></script>
+    <!-- SEO data -->
+    {{#if pageUrl}}
+    <link rel="canonical" href="{{pageUrl}}" />
+    {{else}}
+    <link rel="canonical" href="{{config.baseUrl}}" />
+    {{/if}}
+    <meta name="referrer" content="origin" />
+    {{#if @root.config.facebookAppId}}
+    <meta property="fb:app_id" content="{{@root.config.facebookAppId}}" />
+    {{/if}}
+    <meta property="og:site_name" content="{{config.cartTitle}}" />
+    {{#if result.productTitle}}
+    <meta property="og:type" content="product" />
+    {{else}}
+    <meta property="og:type" content="website" />
+    {{/if}}
+    <meta property="og:title" content="{{title}}" />
+    {{#if pageUrl}}
+    <meta property="og:url" content="{{pageUrl}}" />
+    {{else}}
+    <meta property="og:url" content="{{config.baseUrl}}" />
+    {{/if}}
+    {{#if result.productImage}}
+    <meta property="og:image" content="{{config.baseUrl}}{{result.productImage}}" />
+    {{/if}}
+    {{#if productDescription}}
+    <meta property="og:description" content="{{snip productDescription}}">
+    {{else}}
+    {{#if metaDescription}}
+    <meta property="og:description" content="{{snip metaDescription}}">
+    {{else}}
+    <meta property="og:description" content="{{snip config.cartDescription}}">
+    {{/if}}
+    {{/if}}
+    {{#if @root.config.twitterHandle}}
+    <meta property="twitter:site" content="{{@root.config.twitterHandle}}">
+    {{/if}}
+    {{#if result.productTitle}}
+    <meta property="twitter:card" content="product" />
+    {{else}}
+    <meta property="twitter:card" content="summary" />
+    {{/if}}
+    <meta property="twitter:title" content="{{title}}" />
+    {{#if pageUrl}}
+    <meta property="twitter:url" content="{{pageUrl}}" />
+    {{else}}
+    <meta property="twitter:url" content="{{config.baseUrl}}" />
+    {{/if}}
+    {{#if result.productTitle}}
+    <script type="application/ld+json">
+            {
+                "@context": "https://schema.org/",
+                "@type": "Product",
+                "name": "{{result.productTitle}}",
+                "offers": {
+                    "price": "{{result.productPrice}}",
+                    "priceCurrency": "{{config.currencyISO}}",
+                    {{#ifCond result.productStock '>' 0}}
+                    "availability": "https://schema.org/InStock",
+                    {{else}}
+                    "availability": "https://schema.org/SoldOut",
+                    {{/ifCond}}
+                    "url": "{{pageUrl}}"
+                },
+                "sku": "{{result._id}}",
+                {{#if result.productGtin}}
+                "gtin": "{{result.productGtin}}",
+                {{/if}}
+                {{#if result.productImage}}
+                "image": "{{config.baseUrl}}{{result.productImage}}",
+                {{else}}
+                "image": "{{config.baseUrl}}uploads/placeholder.png",
+                {{/if}}
+                {{#if result.productBrand}}
+                "brand": {
+                    "@type": "Organization",
+                    "name": "{{result.productBrand}}"
+                },
+                {{/if}}
+                {{#ifCond reviews.count '>' 0}}
+                "review": {
+                    "@type": "Review",
+                    "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": "{{@root.reviews.featured.review.rating}}",
+                        "bestRating": "{{@root.reviews.highestRating}}"
+                    },
+                    "author": {
+                        "@type": "Person",
+                        "name": "{{@root.reviews.featured.customer.firstName}} {{@root.reviews.featured.customer.lastName}}"
+                    }
+                },
+                {{/ifCond}}
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "{{@root.reviews.average}}",
+                    "reviewCount": "{{@root.reviews.count}}"
+                },
+                {{#if productDescription}}
+                "description": "{{snip productDescription}}",
+                {{/if}}
+                {{#if pageUrl}}
+                "url": "{{pageUrl}}"f
+                {{else}}
+                "url": "{{config.baseUrl}}"
+                {{/if}}
+            }
+        </script>
+    {{/if}}
+    <!-- SEO data -->
+    {{~#if config.googleAnalytics}}{{{config.googleAnalytics}}}{{/if}}
+    {{~#if config.customCss}}<style>
+        {
+                {
+                    {
+                    config.customCss
+                }
+            }
+        }
+    </style>{{/if}}
+    {{#if admin}}
+    <link rel="stylesheet" href="/stylesheets/admin{{config.env}}.css">
+    {{else}}
+    {{#if config.theme}}
+    <link rel="stylesheet" href="/{{config.theme}}/style{{config.env}}.css">
+    <script src="/{{config.theme}}/index{{config.env}}.js"></script>
+    {{/if}}
+    {{/if}}
+</head>
+{{#if admin}}
+
+<body class="admin">
+    {{else}}
+
+    <body>
+        {{/if}}
+        {{#unless admin}}
+        <!-- Page Preloder -->
+        <div id="preloder">
+            <div class="loader"></div>
+        </div>
+
+        <!-- Humberger Begin -->
+        <div class="humberger__menu__overlay"></div>
+        <div class="humberger__menu__wrapper">
+            <div class="humberger__menu__logo">
+                <a href="/"><img src="/images/img/logo.png" alt=""></a>
+            </div>
+            <div class="humberger__menu__cart">
+                <ul>
+                    <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                    <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                </ul>
+                <div class="header__cart__price">item: <span>{{currencySymbol
+                        @root.config.currencySymbol}}{{formatAmount @root.session.totalCartAmount}}</span></div>
+            </div>
+            <div class="humberger__menu__widget">
+                {{#ifCond @root.config.enableLanguages "!=" false}}
+                <div class="header__top__right__language">
+                    <img style="width:20px" src="/images/img/vietnam.jpg" alt="">
+                    <div>Tiếng Việt</div>
+                    <span class="arrow_carrot-down"></span>
+                    <ul>
+                        {{#availableLanguages}}
+                        <li><a class="dropdown-item" href="/lang/{{this}}">{{@root.__ this}}</a></li>
+                        {{/availableLanguages}}
+                    </ul>
+                </div>
+                {{/ifCond}}
+
+                <div class="header__top__right__auth header__top__right__language">
+                    {{#if @root.session.customerPresent}}
+                    <span class="">User</span>
+                    <ul>
+                        <li><a class="dropdown-item" href="/customer/account"><i class="fa fa-user"></i>
+                                Tài Khoản</a></li>
+                        <li><a class="dropdown-item" href="/customer/logout"><i class="fa fa-user"></i>
+                                Đăng Xuất</a></li>
+                    </ul>
+                    {{else}}
+                    <a href="/customer/account"><i class="fa fa-user"></i>
+                        Đăng Nhập</a>
+                    {{/if}}
+                </div>
+
+            </div>
+            <nav class="humberger__menu__nav mobile-menu">
+                <ul>
+                    <li class="active"><a href="/">Trang chủ</a></li>
+                    <li><a href="/shop">Cửa hàng</a></li>
+                    {{!-- <li><a href="#">Pages</a>
+                        <ul class="header__menu__dropdown">
+                            <li><a href="./shop-details.html">Shop Details</a></li>
+                            <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                            <li><a href="./checkout.html">Check Out</a></li>
+                            <li><a href="./blog-details.html">Blog Details</a></li>
+                        </ul>
+                    </li> --}}
+                    <li><a href="./blog.html">Thông tin</a></li>
+                    <li><a href="/contact">Liên hệ</a></li>
+                </ul>
+            </nav>
+            <div id="mobile-menu-wrap"></div>
+            <div class="header__top__right__social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+            </div>
+            <div class="humberger__menu__contact">
+                <ul>
+                    <li><i class="fa fa-envelope"></i> hello@dcv.com</li>
+                    <li>Miễn phí vẫn chuyển với đơn hàng từ 500.000 VNĐ</li>
+
+                </ul>
+            </div>
+        </div>
+        <!-- Humberger End -->
+
+        <!-- Header Section Begin -->
+        <header class="header">
+            <div class="header__top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="header__top__left">
+                                <ul>
+                                    <li><i class="fa fa-envelope"></i> hello@dcv.com</li>
+                                    <li>Miễn phí vẫn chuyển với đơn hàng từ 500.000 VNĐ</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="header__top__right">
+                                <div class="header__top__right__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                                </div>
+                                {{#ifCond @root.config.enableLanguages "!=" false}}
+                                <div class="header__top__right__language">
+                                    <img style="width:20px" src="/images/img/vietnam.jpg" alt="">
+                                    <div>Tiếng Việt</div>
+                                    <span class="arrow_carrot-down"></span>
+                                    <ul>
+                                        {{#availableLanguages}}
+                                        <li><a class="dropdown-item" href="/lang/{{this}}">{{@root.__ this}}</a></li>
+                                        {{/availableLanguages}}
+                                    </ul>
+                                </div>
+                                {{/ifCond}}
+
+                                {{#if @root.session.customerPresent}}
+                                <div class="header__top__right__auth header__top__right__language">
+                                    <span class=""> Người dùng</span>
+                                    <ul>
+                                        <li><a class="dropdown-item" href="/customer/account"><i class="fa fa-user"></i>
+                                                Tài Khoản</a></li>
+                                        <li><a class="dropdown-item" href="/customer/logout"><i class="fa fa-user"></i>
+                                                Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                                {{else}}
+                                <div class="header__top__right__auth">
+                                    <li class="list_style"><a href="/customer/account"><i class="fa fa-user"></i>
+                                            Đăng Nhập</a></li>
+                                </div>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="header__logo">
+                            <a href="/"><img src="/images/img/logo.png" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <nav class="header__menu">
+                            <ul>
+                                <li class="active"><a href="/">Trang chủ</a></li>
+                                <li><a href="/shop">Cửa hàng</a></li>
+                                {{!-- <li><a href="#">Pages</a>
+                                    <ul class="header__menu__dropdown">
+                                        <li><a href="./shop-details.html">Shop Details</a></li>
+                                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                                        <li><a href="./checkout.html">Check Out</a></li>
+                                        <li><a href="./blog-details.html">Blog Details</a></li>
+                                    </ul>
+                                </li> --}}
+                                <li><a href="/">Thông tin</a></li>
+                                <li><a href="/contact">Liên hệ</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="header__cart">
+                            <ul>
+                                {{!-- <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li> --}}
+                                {{#if @root.session.cart}}
+                                <li><a href="/checkout/cart"><i class="fa fa-shopping-bag"></i> <span
+                                            id="cart-count">{{@root.session.totalCartItems}}</span></a></li>
+                                {{else}}
+                                <li><a href="/checkout/cart"><i class="fa fa-shopping-bag"></i> <span
+                                            id="cart-count">0</span></a></li>
+                                {{/if}}
+                            </ul>
+                            <div class="header__cart__price" id="total-cart-amount">
+                                <div class="cartTotalsWrapper">
+                                    {{#if @root.session.cart}}
+                                    <div class="d-flex flex-row">
+                                        <div class="cart-contents-shipping col-md-12 no-pad-right">
+                                            {{#ifCond @root.session.totalCartDiscount '>' 0}}
+                                            <div class="text-right">
+                                                Giảm giá: <strong id="discount-amount">{{currencySymbol
+                                                    @root.config.currencySymbol}}{{formatAmount
+                                                    @root.session.totalCartDiscount}}</strong>
+                                            </div>
+                                            {{/ifCond}}
+                                            <div class="text-right">
+                                                Giá tiền:
+                                                <strong id="total-cart-amount">{{currencySymbol
+                                                    @root.config.currencySymbol}}{{formatAmount
+                                                    @root.session.totalCartAmount}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{else}}
+                                    <div class="text-right">
+                                        Giá tiền
+                                        <strong id="total-cart-amount">
+                                            0 đ</strong>
+                                    </div>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="humberger__open">
+                    <i class="fa fa-bars"></i>
+                </div>
+            </div>
+        </header>
+        <!-- Header Section End -->
+
+
+        {{/unless}}
+        <div class="site-overlay"></div>
+        {{#unless admin}}
+        {{#ifCond page '!=' 'checkout'}}
+        {{#ifCond page '!=' 'pay'}}
+        {{!-- <div id="cart" class="col-md-12 pad-left-12 top-pad-10 pushy pushy-right">
+            <div class="row {{checkout}}">
+                <div class="col-sm-12 text-right">
+                    <button class="pushy-link btn btn-primary" type="button">{{{feather 'x'}}}</button>
+                </div>
+            </div>
+            <div class="row">
+                <div id="cart" class="col-md-12">
+                    {{> (getTheme 'cart')}}
+                    <div class="row">
+                        <div class="col-sm-12 {{showCartButtons @root.session.cart}} cart-buttons">
+                            <button class="btn btn-danger float-left" id="empty-cart" type="button">{{ @root.__ "Empty
+                                cart" }}</button>
+                            <a href="/checkout/information" class="btn btn-primary float-right">Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+        {{/ifCond}}
+        {{/ifCond}}
+        {{/unless}}
+        <!-- Your share button code -->
+        < {{{body}}} <input type="hidden" id="input_notify_message" value="{{message}}">
+            <input type="hidden" id="input_notify_messageType" value="{{messageType}}">
+            <input type="hidden" id="cartCheckout" value="{{checkout}}">
+            <input type="hidden" id="cartTheme" value="{{@root.config.theme}}">
+            <input type="hidden" id="currencySymbol" value="{{@root.config.currencySymbol}}">
+            {{#if @root.config.maxQuantity}} <input type="hidden" id="maxQuantity"
+                value="{{@root.config.maxQuantity}}">{{/if}}
+            <div id="notify_message"></div>
+            {{#if showFooter}}
+            <!-- Footer Section Begin -->
+            <footer class="footer spad">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer__about">
+                                <div class="footer__about__logo">
+                                    <a href="/"><img src="/images/img/logo.png" alt=""></a>
+                                </div>
+                                <ul>
+                                    <li>Address: Số 62 Nguyễn Huy Tưởng</li>
+                                    <li>Phone: +84 965.105.459</li>
+                                    <li>Email: hello@dcv.com</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                            <div class="footer__widget">
+                                <h6>Thông tin</h6>
+                                <ul>
+                                    <li><a href="#">Về chúng tôi</a></li>
+                                    <li><a href="#">Về cửa hàng của chúng tôi</a></li>
+                                    <li><a href="#">Mua sắm an toàn</a></li>
+                                    <li><a href="#">Thông tin giao hàng</a></li>
+                                    <li><a href="#">Chính sách bảo mật</a></li>
+                                    <li><a href="#">Sơ đồ</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="#">Chúng tôi là ai</a></li>
+                                    <li><a href="#">Dịch vụ của chúng tôi</a></li>
+                                    <li><a href="#">Dự án</a></li>
+                                    <li><a href="#">Liên hệ</a></li>
+                                    <li><a href="#">Sự đổi mới</a></li>
+                                    <li><a href="#">Lời chứng thực</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                            <div class="footer__widget">
+                                <h6>Nhận thông báo của chúng tôi</h6>
+                                <p>Nhận cập nhật qua email về cửa hàng mới nhất của chúng tôi và các ưu đãi đặc biệt.
+                                </p>
+                                <form action="#">
+                                    <input type="text" placeholder="Nhập mail của bạn">
+                                    <button type="submit" class="site-btn">Đăng ký</button>
+                                </form>
+                                <div class="footer__widget__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="footer__copyright">
+                                <div class="footer__copyright__text">
+                                    <p>
+                                        <!-- Link back to dcv can't be removed. Template is licensed under CC BY 3.0. -->
+                                        Copyright &copy;
+                                        <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                        This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
+                                            href="https://dcv.com" target="_blank">dcv</a>
+                                        <!-- Link back to dcv can't be removed. Template is licensed under CC BY 3.0. -->
+                                    </p>
+                                </div>
+                                <div class="footer__copyright__payment"><img src="/images/img/payment-item.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- Footer Section End -->
+            {{/if}}
+            <script src="/javascripts/pushy.min.js"></script>
+            {{#if admin}}
+            {{> partials/globalSearchModal}}
+            {{> partials/validationModal}}
+            {{> partials/variantModal}}
+            {{> partials/variantEditModal}}
+            {{/if}}
+            {{> partials/confirmModal}}
+            {{#if @root.config.modules.enabled.reviews}}
+            {{> partials/reviewModal}}
+            {{/if}}
+            <script>
+                feather.replace();
+            </script>
+
+
+
+            <script src="/javascripts/bootstrap.min.js"></script>
+            <script src="/javascripts/jquery.nice-select.min.js"></script>
+            <script src="/javascripts/jquery-ui.min.js"></script>
+            <script src="/javascripts/jquery.slicknav.js"></script>
+            <script src="/javascripts/mixitup.min.js"></script>
+            <script src="/javascripts/owl.carousel.min.js"></script>
+            <script src="/javascripts/main.js"></script>
+
+    </body>
+
+</html>

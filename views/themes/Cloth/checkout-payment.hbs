@@ -1,0 +1,122 @@
+<!-- Hero Section Begin -->
+<section class="hero hero-normal">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Danh Mục</span>
+                    </div>
+                    <ul>
+                        {{#each menu.items}}
+                        <li {{#menuMatch this.title @root.searchTerm}}{{/menuMatch}} {{#menuMatch this.title
+                            @root.title}}{{/menuMatch}}>
+                            <a href="{{this.link}}">{{this.title}}</a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            <div class="hero__search__categories">
+                                Toàn cửa hàng
+                                <span class="arrow_carrot-down"></span>
+                            </div>
+                            <input name="frm_search" id="frm_search" type="search" placeholder="What do you need?">
+                            <button type="submit" id="btn_search" class="site-btn">SEARCH</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>0965.105.459</h5>
+                            <span>Hỗ trợ 24/07</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/images/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Organi Shop</h2>
+                    <div class="breadcrumb__option">
+                        <a href="/">Home</a>
+                        <span>Check Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<div class="login_form">
+    <div class="col-md-4 offset-md-4">
+
+
+        {{#if paymentMessage}}
+        <p class="text-danger text-center">{{paymentMessage}}</p>
+        {{/if}}
+
+        <div class="card top-marg-15">
+            <div class="card-body">
+                <h5 class="card-title">Thông tin khách hàng</h5>
+                <ul class="list-group bottom-pad-15">
+                    <li class="list-group-item">
+                        {{@root.session.customerFirstname}} {{@root.session.customerLastname}} -
+                        {{@root.session.customerEmail}}
+                        <span class="float-right"><a href="/checkout/information">Thay đổi</a></span>
+                    </li>
+                </ul>
+                <ul class="list-group bottom-pad-15">
+                    {{#ifCond @root.session.totalCartShipping '>' 0}}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{@root.session.shippingMessage}}
+                            </div>
+                            <div class="col-md-6">
+                                <span><strong>{{currencySymbol @root.config.currencySymbol}}{{formatAmount
+                                        @root.session.totalCartShipping}}</strong></span>
+                                <span class="float-right"><a href="/checkout/shipping">Thay đổi</a></span>
+                            </div>
+                        </div>
+                    </li>
+                    {{else}}
+                    <li class="list-group-item">Miễn Phí vận chuyển <span class="float-right"><a
+                                href="/checkout/shipping">Thay đổi</a></span></li>
+                    {{/ifCond}}
+                </ul>
+
+                {{!-- <form id="shipping-form" class="shipping-form"
+                    action="/{{config.paymentGateway}}/checkout_action{{@root.paymentType}}" method="post" role="form"
+                    data-toggle="validator" novalidate="false">
+                    {{#if session.customerPresent}}
+                    {{> (partial config.paymentGateway) }}
+                    {{/if}}
+                </form> --}}
+                <form id="shipping-form" class="shipping-form" action="/instore/pay-detail" method="post"
+                    role="form" data-toggle="validator" novalidate="true">
+                    <div class="instore_button col-sm-12 text-center">
+                        <button id="checkout_instore" class="site-btn" type="submit">Thanh toán</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>

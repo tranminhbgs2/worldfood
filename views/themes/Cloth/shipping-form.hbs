@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="checkout__input">
+            <p>Họ<span>*</span></p>
+            <input type="text" id="shipFirstname" name="shipFirstname" placeholder="First name"
+                value="{{@root.session.customerFirstname}}" required>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="checkout__input">
+            <p>Tên<span>*</span></p>
+            <input type="text" id="shipLastname" name="shipLastname" placeholder="Last name"
+                value="{{@root.session.customerLastname}}" required>
+        </div>
+    </div>
+</div>
+<div class="checkout__input">
+    <p>Quốc gia<span>*</span></p>
+    <select id="shipCountry" name="shipCountry" required>
+        <option value="" disabled selected>Select Country</option>
+        {{#each countryList}}
+        <option {{selectState this @root.session.customerCountry}} value="{{this}}">{{this}}</option>
+        {{/each}}
+    </select>
+</div>
+<div class="checkout__input">
+    <p>Địa chỉ<span>*</span></p>
+    <input type="text" placeholder="Street Address" class="checkout__input__add" id="shipAddr1" name="shipAddr1"
+        value="{{@root.session.customerAddress1}}" required>
+    <input type="text" placeholder="Apartment, suite, unite ect (optinal)" id="shipAddr2" name="shipAddr2"
+        value="{{@root.session.customerAddress2}}">
+</div>
+<div class="checkout__input">
+    <p>Tỉnh<span>*</span></p>
+    <input type="text" id="shipState" name="shipState" placeholder="State" value="{{@root.session.customerState}}"
+        required>
+</div>
+<div class="checkout__input">
+    <p>Công ty<span>*</span></p>
+    <input type="text" id="shipCompany" name="shipCompany" placeholder="State" value="{{@root.session.customerCompany}}"
+        required>
+</div>
+<div class="checkout__input">
+    <p>Mã thư viện<span>*</span></p>
+    <input type="text" id="shipPostcode" name="shipPostcode" placeholder="Post code"
+        value="{{@root.session.customerPostcode}}" required>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="checkout__input">
+            <p>Số điện thoại<span>*</span></p>
+            <input type="text" id="shipPhoneNumber" name="shipPhoneNumber" placeholder="Phone number"
+                value="{{@root.session.customerPhone}}" required>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="checkout__input">
+            <p>Email<span>*</span></p>
+            <input type="email" id="shipEmail" name="shipEmail" minlength="5" placeholder="Email address"
+                value="{{@root.session.customerEmail}}" required>
+        </div>
+    </div>
+</div>
+{{#unless @root.session.customerPresent}}
+<div class="checkout__input__checkbox">
+    <label for="acc">
+        Bạn muốn tạo tài khoản?
+        <input type="checkbox" id="createAccountCheckbox">
+        <span class="checkmark"></span>
+    </label>
+</div>
+<p>
+Tạo tài khoản bằng cách nhập thông tin bên dưới. Nếu bạn là khách hàng cũ Xin hãy đăng nhập ở phía trên cùng của trang</p>
+<div class="checkout__input">
+    <p>Mật khẩu<span>*</span></p>
+    <input type="password" id="newCustomerPassword" name="newCustomerPassword" placeholder="Password">
+</div>
+{{/unless}}
+<div class="checkout__input">
+    <p>Ghi chú<span>*</span></p>
+    <input type="text" placeholder="Nhập ghi chú của bạn" id="orderComment"
+        name="orderComment">
+</div>
